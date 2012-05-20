@@ -1,0 +1,95 @@
+﻿@model Guid
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Composition</title>
+    <script src='@Url.Content("~/Scripts/jquery-1.7.2.js")'></script>
+    <script src='@Url.Content("~/Scripts/underscore.js")'></script>
+    <script src='@Url.Content("~/Scripts/knockout-2.1.0.js")'></script>
+    <script src='@Url.Content("~/Scripts/knockout.mapping-latest.js")'></script>
+    <script src='@Url.Action("Script", "Component1")'></script>
+    <script src='@Url.Action("Script", "Component2")'></script>
+</head>
+<body>
+    <div>
+        <button id="run">Request thing owners</button>
+        <table data-bind="foreach: thingOwners">
+            <tr>
+                <td>
+                    <input type="text" data-bind="value: person.name" />
+                </td>
+                <td>
+                    <input type="text" data-bind="value: owner.numberOfThings" />
+                </td>
+            </tr>
+        </table>
+        
+        <button data-bind="click: submit">Update thing owners and persons</button>
+    </div>
+    
+    <script type="text/javascript">
+        function ThingOwnerModel(data) {
+            var that = this;
+            ko.mapping.fromJS(data, {}, this);
+            this.title = ko.computed(function () {
+                return that.thingOwners().length + " persons";
+            });
+
+            this.submit = function () {
+                var owners = _.map(that.thingOwners(), function (p) {
+                    return ko.mapping.toJSON(p.owner);
+                });
+
+                var persons = _.map(that.thingOwners(), function (p) {
+                    return p.person;
+                });
+
+                $(document).trigger('thingOwnersSubmitted', ko.mapping.toJSON(owners));
+                $(document).trigger('personsSubmitted', ko.mapping.toJSON(persons));
+            };
+        }
+
+        (function () {
+
+            $(document).on('thingOwnersSubmitted', function(e, r) {
+                console.log('Owners: ' + r);
+            });
+
+            $(document).on('personsSubmitted', function (e, r) {
+                console.log('Persons: ' + r);
+            });
+
+            $("#run").click(function (e) {
+                $(document).trigger('thingsNeeded', '@Model');
+            });
+
+            var data = [];
+            $(document).on('thingsGotten', function (e, result) {
+                data = _.map(result.thingOwners, function (to) {
+                    return { id: to.id, owner: to };
+                });
+                var ids = _.map(result.thingOwners, function(to) {
+                    return to.id;
+                });
+                $(document).trigger('personsNeeded', ids);
+            });
+
+            $(document).on('personsGotten', function (e, result) {
+                _.each(result.persons, function (p) {
+                    _.each(data, function (d) {
+                        if (d.owner.Id == p.Id) {
+                            d.person = p;
+                        }
+                    });
+                });
+                var viewModel = new ThingOwnerModel({ thingOwners: data });
+                ko.applyBindings(viewModel);
+            });
+
+        } ());
+    </script>
+</body>
+</html>
