@@ -28,11 +28,17 @@
         </table>
         
         <button data-bind="click: submit">Update thing owners and persons</button>
+        
+        <p data-bind="visible: thingOwnersStored">Thing owners stored</p>
+        <p data-bind="visible: personsStored">Persons stored</p>
     </div>
     
     <script type="text/javascript">
         function ThingOwnerModel(data) {
             var that = this;
+            this.thingOwnersStored = ko.observable(false);
+            this.personsStored = ko.observable(false);
+
             ko.mapping.fromJS(data, {}, this);
             this.title = ko.computed(function () {
                 return that.thingOwners().length + " persons";
@@ -50,19 +56,20 @@
                 $(document).trigger('thingOwnersSubmitted', ko.mapping.toJSON(owners));
                 $(document).trigger('personsSubmitted', ko.mapping.toJSON(persons));
             };
+
+            $(document).on('thingOwnersUpdated', function () {
+                that.thingOwnersStored(true);
+            });
+
+            $(document).on('personsUpdated', function () {
+                that.personsStored(true);
+            });
+
         }
 
         (function () {
 
-            $(document).on('thingOwnersSubmitted', function(e, r) {
-                console.log('Owners: ' + r);
-            });
-
-            $(document).on('personsSubmitted', function (e, r) {
-                console.log('Persons: ' + r);
-            });
-
-            $("#run").click(function (e) {
+            $("#run").click(function () {
                 $(document).trigger('thingsNeeded', '@Model');
             });
 
@@ -87,6 +94,7 @@
                 });
                 var viewModel = new ThingOwnerModel({ thingOwners: data });
                 ko.applyBindings(viewModel);
+                
             });
 
         } ());
