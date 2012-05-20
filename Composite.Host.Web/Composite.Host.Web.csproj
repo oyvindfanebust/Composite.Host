@@ -85,11 +85,11 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Composite.Component1\Composite.Component1\Composite.Component1.csproj">
+    <ProjectReference Include="..\Composite.Component1\Composite.Component1\Composite.Component1.csproj">
       <Project>{B4ADD6FD-D89B-41EC-8187-408C3D75EA5C}</Project>
       <Name>Composite.Component1</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Composite.Component2\Composite.Component2\Composite.Component2.csproj">
+    <ProjectReference Include="..\Composite.Component2\Composite.Component2\Composite.Component2.csproj">
       <Project>{9C6F3072-3379-4DD7-A360-6867828B8C56}</Project>
       <Name>Composite.Component2</Name>
     </ProjectReference>

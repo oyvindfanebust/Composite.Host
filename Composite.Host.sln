@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Composite.Host.Web", "Composite.Host.Web\Composite.Host.Web.csproj", "{C837ED26-82E2-4548-839F-263BD8A714FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Composite.Component1", "..\Composite.Component1\Composite.Component1\Composite.Component1.csproj", "{B4ADD6FD-D89B-41EC-8187-408C3D75EA5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Composite.Component1", "Composite.Component1\Composite.Component1\Composite.Component1.csproj", "{B4ADD6FD-D89B-41EC-8187-408C3D75EA5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Composite.Component2", "..\Composite.Component2\Composite.Component2\Composite.Component2.csproj", "{9C6F3072-3379-4DD7-A360-6867828B8C56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Composite.Component2", "Composite.Component2\Composite.Component2\Composite.Component2.csproj", "{9C6F3072-3379-4DD7-A360-6867828B8C56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
