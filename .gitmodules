@@ -1,3 +1,6 @@
 [submodule "Composite.Component1"]
 	path = Composite.Component1
 	url = git@github.com:OyvindFanebust/Composite.Component1.git
+[submodule "Composite.Component2"]
+	path = Composite.Component2
+	url = git@github.com:OyvindFanebust/Composite.Component2.git
